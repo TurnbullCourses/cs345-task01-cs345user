@@ -24,11 +24,25 @@ class BankAccountTest {
 
     @Test
     void isEmailValidTest(){
-        assertTrue(BankAccount.isEmailValid( "a@b.com"));
-        assertFalse(BankAccount.isEmailValid(""));
+        assertTrue(BankAccount.isEmailValid( "a@b.com")); //valid
 
-        assertFalse(BankAccount.isEmailValid("a@")); // does not have domain in email
+        // must have exactly one @ character
+        assertFalse(BankAccount.isEmailValid("")); //empty string
+        assertFalse(BankAccount.isEmailValid("a@b@c.com")); //2 or more @symbols
 
+        //prefix conditions
+        assertTrue(BankAccount.isEmailValid("abc-d@c.com"));
+        assertFalse(BankAccount.isEmailValid("abc-@c.com")); // does not have domain in email
+        assertFalse(BankAccount.isEmailValid("abc-@c.com")); // ends with dash
+        assertFalse(BankAccount.isEmailValid("abc.-d@c.com")); //two non-alpha numeric in a row
+        assertFalse(BankAccount.isEmailValid("abc#d@c.com")); //illegal character
+
+        //domain
+        assertTrue(BankAccount.isEmailValid("abc@c-d.com"));
+        assertFalse(BankAccount.isEmailValid("abc@c.c")); //domain too short
+        assertFalse(BankAccount.isEmailValid("abc@c_d.com")); // invalid character
+        assertFalse(BankAccount.isEmailValid("abc@c..com")); //two periods in a row
+        assertFalse(BankAccount.isEmailValid("abc@ccom")); //no period
     }
 
     @Test
@@ -40,7 +54,7 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
 
-        int a = 1;
+      
     }
 
 }
