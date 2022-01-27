@@ -29,11 +29,13 @@ class BankAccountTest {
         // must have exactly one @ character
         assertFalse(BankAccount.isEmailValid("")); //empty string
         assertFalse(BankAccount.isEmailValid("a@b@c.com")); //2 or more @symbols
-
+        assertFalse(BankAccount.isEmailValid("@c.com")); //2 or more @symbols
+        assertFalse(BankAccount.isEmailValid("abc@")); //2 or more @symbols
         //prefix conditions
         assertTrue(BankAccount.isEmailValid("abc-d@c.com"));
         assertFalse(BankAccount.isEmailValid("abc-@c.com")); // does not have domain in email
         assertFalse(BankAccount.isEmailValid("abc-@c.com")); // ends with dash
+        assertFalse(BankAccount.isEmailValid("_abc@c.com")); //bad first character
         assertFalse(BankAccount.isEmailValid("abc.-d@c.com")); //two non-alpha numeric in a row
         assertFalse(BankAccount.isEmailValid("abc#d@c.com")); //illegal character
 
