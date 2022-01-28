@@ -124,10 +124,21 @@ public class BankAccount {
      * @return
      */
     public static boolean isAmountValid(double amount){
+
+        if (amount < 0){
+            return false;
+        }
+        double rounded = Math.floor(amount*100)/100;
+
+        if (rounded == amount){
+            return true;
+        }
+
         return false;
     }
-    
+
     public static void main(String[] args) {
-        BankAccount.isEmailValid("a@b.co");
+        //BankAccount.isEmailValid("a@b.co");
+        BankAccount.isAmountValid(1.23);
     }
 }
