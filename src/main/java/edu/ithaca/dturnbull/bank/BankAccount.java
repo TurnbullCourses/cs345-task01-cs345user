@@ -1,5 +1,6 @@
 package edu.ithaca.dturnbull.bank;
 
+import javax.naming.ldap.StartTlsRequest;
 
 public class BankAccount {
 
@@ -10,12 +11,18 @@ public class BankAccount {
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance){
-        if (isEmailValid(email)){
+        if (isEmailValid(email) && isAmountValid(startingBalance)){
             this.email = email;
             this.balance = startingBalance;
         }
         else {
-            throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+            if (isEmailValid(email) == false){
+                throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
+            } else if (isAmountValid(startingBalance) == false) {
+                throw new IllegalArgumentException("Invalid starting balance for new account. Negative or not rounded to nearest cent.");
+            } else {
+                throw new IllegalArgumentException("Invald input when constructing new bank account.");
+            }
         }
     }
 
@@ -33,9 +40,12 @@ public class BankAccount {
      * throws InsufficentFundsException if Balances is less than amount 
      */
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
-        if (amount < 0){
-            throw new IllegalArgumentException("Cannot have negative amount of funds to withdraw.");
+        if (isAmountValid(amount)==false){
+        
+            throw new IllegalArgumentException("Invalid withdraw amount: Negative or not rounded to nearest cent.");
         }
+
+    
         
         if (amount <= balance){
             balance -= amount;
