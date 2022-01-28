@@ -1,6 +1,5 @@
 package edu.ithaca.dturnbull.bank;
 
-import javax.naming.ldap.StartTlsRequest;
 
 public class BankAccount {
 
@@ -52,11 +51,32 @@ public class BankAccount {
         }
     }
 
+    /**
+     * deposit money into an account
+     * @param amount - must be positive and rounded to nearest cent
+     * @throws IllegalArgumentException
+     */
     public void deposit(double amount) throws IllegalArgumentException{
         if (isAmountValid(amount)==false){
             throw new IllegalArgumentException("Invalid deposit amount: Negative or not rounded to nearest cent.");
         }  
         balance += amount; 
+    }
+
+    /**
+     * takes money from this account and send it to the other account
+     * @param otherAcount
+     * @param amount
+     * @throws IllegalArgumentException
+     */
+    public void transfer(BankAccount otherAccount, double amount) throws IllegalArgumentException, InsufficientFundsException{
+        if (isAmountValid(amount)==false){
+            throw new IllegalArgumentException("Invalid deposit amount: Negative or not rounded to nearest cent.");
+        }  
+
+        this.withdraw(amount);
+        otherAccount.deposit(amount);
+
     }
 
     private static boolean hasDoubleSymbol(String fullStr){

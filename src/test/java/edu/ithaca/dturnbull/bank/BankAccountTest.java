@@ -36,6 +36,22 @@ class BankAccountTest {
     }
 
     @Test
+    void transferTest() throws InsufficientFundsException{
+        BankAccount fromAccount = new BankAccount("from@b.com",200);
+        BankAccount toAccount = new BankAccount("to@b.com", 125);
+
+        fromAccount.transfer(toAccount, 25);
+
+        assertEquals(175, fromAccount.getBalance(), 0.001);
+        assertEquals(150, toAccount.getBalance(), 0.001);
+
+        assertThrows(IllegalArgumentException.class, () -> fromAccount.transfer(toAccount, -50));
+        assertThrows(IllegalArgumentException.class, () -> fromAccount.transfer(toAccount, 50.123));
+
+        assertThrows(InsufficientFundsException.class, () -> fromAccount.withdraw(201));
+    }
+
+    @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //valid
 
