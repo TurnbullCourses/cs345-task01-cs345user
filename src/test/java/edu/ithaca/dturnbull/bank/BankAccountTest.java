@@ -11,6 +11,7 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals(200, bankAccount.getBalance(), 0.001);
+        assertNotEquals(201, bankAccount.getBalance(), 0.001);
     }
 
     @Test
@@ -32,6 +33,7 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid("a@b@c.com")); //2 or more @symbols
         assertFalse(BankAccount.isEmailValid("@c.com")); //2 or more @symbols
         assertFalse(BankAccount.isEmailValid("abc@")); //2 or more @symbols
+        
         //prefix conditions
         assertTrue(BankAccount.isEmailValid("abc-d@c.com"));
         assertFalse(BankAccount.isEmailValid("abc-@c.com")); // does not have domain in email
@@ -42,10 +44,29 @@ class BankAccountTest {
 
         //domain
         assertTrue(BankAccount.isEmailValid("abc@c-d.com"));
+        assertTrue(BankAccount.isEmailValid("abc@cd.co.uk"));
         assertFalse(BankAccount.isEmailValid("abc@c.c")); //domain too short
         assertFalse(BankAccount.isEmailValid("abc@c_d.com")); // invalid character
         assertFalse(BankAccount.isEmailValid("abc@c..com")); //two periods in a row
         assertFalse(BankAccount.isEmailValid("abc@ccom")); //no period
+    }
+
+    @Test
+    void isAmountValidTest(){
+
+        // valid number of decimal points
+        assertTrue(BankAccount.isAmountValid(1.23));
+        assertTrue(BankAccount.isAmountValid(1.2));
+        assertTrue(BankAccount.isAmountValid(1));
+        
+        //boundary cases
+        assertTrue(BankAccount.isAmountValid(0.01));  
+        assertTrue(BankAccount.isAmountValid(0));
+        assertFalse(BankAccount.isAmountValid(-0.01));
+
+        assertFalse(BankAccount.isAmountValid(-1.23));
+        assertFalse(BankAccount.isAmountValid(1.234));
+
     }
 
     @Test

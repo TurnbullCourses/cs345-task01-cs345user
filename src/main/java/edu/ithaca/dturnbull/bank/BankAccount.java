@@ -30,7 +30,7 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * throws IllegalArgumentException if amount is negative
-     * throws InsufficentFundsException if Balances is less than amount
+     * throws InsufficentFundsException if Balances is less than amount 
      */
     public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
         if (amount < 0){
@@ -118,6 +118,15 @@ public class BankAccount {
       
     }
 
+    /**
+     * returns true if the amount is positive and has two decimal points or less, and false otherwise
+     * @param amount - amount of money
+     * @return
+     */
+    public static boolean isAmountValid(double amount){
+        return false;
+    }
+    
     public static void main(String[] args) {
         BankAccount.isEmailValid("a@b.co");
     }
