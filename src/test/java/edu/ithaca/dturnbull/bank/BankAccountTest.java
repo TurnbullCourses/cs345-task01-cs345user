@@ -26,6 +26,16 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        bankAccount.deposit(100);
+        assertEquals(300, bankAccount.getBalance(), 0.001);
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-50));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(50.123));
+
+    }
+
+    @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //valid
 

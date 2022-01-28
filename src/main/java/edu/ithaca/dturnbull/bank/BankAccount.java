@@ -43,16 +43,20 @@ public class BankAccount {
         if (isAmountValid(amount)==false){
         
             throw new IllegalArgumentException("Invalid withdraw amount: Negative or not rounded to nearest cent.");
-        }
-
-    
-        
+        }      
         if (amount <= balance){
             balance -= amount;
         }
         else {
             throw new InsufficientFundsException("Not enough money");
         }
+    }
+
+    public void deposit(double amount) throws IllegalArgumentException{
+        if (isAmountValid(amount)==false){
+            throw new IllegalArgumentException("Invalid deposit amount: Negative or not rounded to nearest cent.");
+        }  
+        balance += amount; 
     }
 
     private static boolean hasDoubleSymbol(String fullStr){
